@@ -64,5 +64,32 @@ router.delete("/usuarios/:id", authMiddleware, authorize(["admin"]), async (req,
   }
 });
 
+// [admin] → Cambiar el estado de una cuenta bancaria (activa/inactiva)
+router.patch("/cuentas/:id/estado", authMiddleware, authorize(["admin"]), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { estado } = req.body; // 'activa' o 'inactiva'
+
+    const cuenta = await Cuenta.findByPk(id, {
+      include: [{ model: Usuario, as: "usuario", attributes: ["nombre", "apellido"] }]
+    });
+
+    if (!cuenta) {
+      return res.status(404).json({ message: "Cuenta no encontrada" });
+    }
+
+    await cuenta.update({ estado });
+
+    res.json({
+      message: `Cuenta N° ${cuenta.numero_cuenta} marcada como "${estado}" correctamente`,
+      propietario: `${cuenta.usuario.nombre} ${cuenta.usuario.apellido}`,
+      cuenta: { id: cuenta.id, numero_cuenta: cuenta.numero_cuenta, estado: cuenta.estado }
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error al cambiar estado de la cuenta", error: error.message });
+  }
+});
+
 module.exports = router;
+
 
