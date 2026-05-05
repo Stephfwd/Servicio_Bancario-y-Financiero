@@ -94,7 +94,53 @@ const getHistorial = async (req, res) => {
   }
 };
 
+const deposito = async (req, res) => {
+  const t = await sequelize.transaction();
+  try {
+    const { cuenta_id, monto, descripcion } = req.body;
+    const usuario_id = req.user.id;
+
+    // 1. Validar que la cuenta pertenece al usuario
+    const cuenta = await Cuenta.findOne({ 
+      where: { id: cuenta_id, usuario_id },
+      transaction: t 
+    });
+
+    if (!cuenta) {
+      await t.rollback();
+      return res.status(404).json({ message: "Cuenta no encontrada o no pertenece al usuario" });
+    }
+
+    // 2. Aumentar el saldo
+    cuenta.saldo = parseFloat(cuenta.saldo) + parseFloat(monto);
+    await cuenta.save({ transaction: t });
+
+    // 3. Registrar la transacción
+    const nuevaTransaccion = await Transaccion.create({
+      cuenta_destino_id: cuenta_id,
+      monto,
+      descripcion: descripcion || "Depósito de efectivo",
+      tipo_transaccion_id: 1, // 1 = Deposito
+      estado: "completada"
+    }, { transaction: t });
+
+    await t.commit();
+
+    res.status(201).json({
+      message: "Depósito realizado con éxito",
+      saldo_actual: cuenta.saldo,
+      transaccion: nuevaTransaccion
+    });
+
+  } catch (error) {
+    await t.rollback();
+    console.error(error);
+    res.status(500).json({ message: "Error al realizar el depósito", error: error.message });
+  }
+};
+
 module.exports = {
   transferir,
-  getHistorial
+  getHistorial,
+  deposito
 };

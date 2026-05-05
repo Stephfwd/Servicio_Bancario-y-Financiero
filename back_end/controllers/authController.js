@@ -6,6 +6,10 @@ const register = async (req, res) => {
   try {
     const { nombre, apellido, email, password, telefono, dui, rol_id } = req.body;
 
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email y contraseña son obligatorios" });
+    }
+
     // Verificar si el usuario ya existe
     const userExists = await Usuario.findOne({ where: { email } });
     if (userExists) {
@@ -44,6 +48,10 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email y contraseña son obligatorios" });
+    }
 
     // Buscar usuario
     const user = await Usuario.findOne({ 
