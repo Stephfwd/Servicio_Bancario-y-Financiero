@@ -2,9 +2,13 @@ const express = require("express");
 const router = express.Router();
 const transaccionController = require("../controllers/transaccionController");
 const authMiddleware = require("../middlewares/authMiddleware");
+const authorize = require("../middlewares/roleMiddleware");
 
-router.post("/transferir", authMiddleware, transaccionController.transferir);
-router.post("/deposito", authMiddleware, transaccionController.deposito);
-router.get("/historial/:cuenta_id", authMiddleware, transaccionController.getHistorial);
+// [cliente] → Realizar una transferencia entre cuentas
+router.post("/transferir", authMiddleware, authorize(["cliente"]), transaccionController.transferir);
+// [cliente] → Realizar un depósito a una cuenta propia
+router.post("/deposito", authMiddleware, authorize(["cliente"]), transaccionController.deposito);
+// [cliente, admin] → Ver historial de transacciones de una cuenta
+router.get("/historial/:cuenta_id", authMiddleware, authorize(["cliente", "admin"]), transaccionController.getHistorial);
 
 module.exports = router;
