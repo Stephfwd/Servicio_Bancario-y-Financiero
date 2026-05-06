@@ -62,12 +62,20 @@ const adminController = {
   updateUser: async (req, res) => {
     try {
       const { id } = req.params;
-      const { nombre, apellido, email, telefono, dui, rol_id, estado } = req.body;
+      const { nombre, apellido, email, password, telefono, dui, rol_id, estado } = req.body;
       
       const usuario = await Usuario.findByPk(id);
       if (!usuario) return res.status(404).json({ message: "Usuario no encontrado" });
 
-      await usuario.update({ nombre, apellido, email, telefono, dui, rol_id, estado });
+      const updateData = { nombre, apellido, email, telefono, dui, rol_id, estado };
+
+      // Si el administrador envió una nueva contraseña
+      if (password && password.trim() !== "") {
+        const salt = await bcrypt.genSalt(10);
+        updateData.password = await bcrypt.hash(password, salt);
+      }
+
+      await usuario.update(updateData);
       res.json({ message: "Usuario actualizado correctamente", usuario });
     } catch (error) {
       res.status(500).json({ message: "Error al actualizar usuario" });

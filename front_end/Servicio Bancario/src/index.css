@@ -300,10 +300,87 @@ body {
   font-weight: 600;
 }
 
-select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid var(--border-color);
+/* =========================
+   ESTILOS NUEVOS: TRANSFERENCIAS, HISTORIAL, PERFIL
+========================= */
+.form-card {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 15px;
   border-radius: 4px;
-  background: white;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.filtros-historial {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.cuenta-selector {
+  width: auto;
+  min-width: 250px;
+}
+
+.badge-ingreso { background: #d4edda; color: #155724; }
+.badge-egreso { background: #f8d7da; color: #721c24; }
+
+.perfil-card {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.perfil-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.perfil-detalles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.detalle-item {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.detalle-item strong {
+  display: block;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.detalle-item p {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
 }

@@ -1,13 +1,13 @@
 import api from './api';
 
 const accountService = {
-  getAccountDetails: async () => {
-    const response = await api.get('/accounts/me');
+  getMisCuentas: async () => {
+    const response = await api.get('/cuentas');
     return response.data;
   },
   
-  getBalances: async () => {
-    const response = await api.get('/accounts/balances');
+  getCuentaDetalle: async (id) => {
+    const response = await api.get(`/cuentas/${id}`);
     return response.data;
   }
 };

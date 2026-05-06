@@ -14,8 +14,12 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await authService.login(credentials);
-      navigate('/');
+      const response = await authService.login(credentials);
+      if (response.user.rol === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
     } catch (err) {
       setError('Credenciales inválidas. Por favor intente de nuevo.');
     }
