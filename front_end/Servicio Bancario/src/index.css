@@ -142,13 +142,64 @@ body {
   margin-bottom: 20px;
 }
 
-.login-card p {
-  margin-top: 20px;
-  text-align: center;
+.register-card {
+  max-width: 500px;
+  padding: 40px;
 }
 
-.login-card p span {
+.card-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.card-header h2 {
+  margin: 0;
+  color: var(--primary-color);
+}
+
+.card-header p {
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.btn-block {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 20px;
+  transition: opacity 0.2s;
+}
+
+.btn-block:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.card-footer {
+  margin-top: 25px;
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+  padding-top: 20px;
+}
+
+.card-footer span {
   color: var(--primary-color);
   cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.card-footer span:hover {
   text-decoration: underline;
 }
