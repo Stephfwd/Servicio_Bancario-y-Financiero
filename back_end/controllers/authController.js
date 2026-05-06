@@ -76,9 +76,16 @@ const login = async (req, res) => {
       { expiresIn: "24h" }
     );
 
+    // Configurar cookie segura
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60 * 1000 // 1 día
+    });
+
     res.json({
       message: "Login exitoso",
-      token,
       user: {
         id: user.id,
         nombre: user.nombre,
@@ -93,7 +100,36 @@ const login = async (req, res) => {
   }
 };
 
+const logout = async (req, res) => {
+  res.clearCookie('token');
+  res.json({ message: "Sesión cerrada correctamente" });
+};
+
+const verifySession = async (req, res) => {
+  try {
+    const user = await Usuario.findByPk(req.user.id, {
+      include: [{ model: Rol, as: "rol" }]
+    });
+    
+    if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
+
+    res.json({
+      user: {
+        id: user.id,
+        nombre: user.nombre,
+        apellido: user.apellido,
+        email: user.email,
+        rol: user.rol.nombre
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error al verificar sesión" });
+  }
+};
+
 module.exports = {
   register,
   login,
+  logout,
+  verifySession
 };

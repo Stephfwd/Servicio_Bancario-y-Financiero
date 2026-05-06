@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Principal from '../pages/princpal';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
+import AdminDashboard from '../pages/AdminDashboard';
 import ProtectedRoute from '../components/ProtectedRoute';
 
 const router = createBrowserRouter([
@@ -14,6 +15,14 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: '/admin',
+    element: (
+      <ProtectedRoute requiredRole="admin">
+        <AdminDashboard />
+      </ProtectedRoute>
+    ),
+  },
+  {
     path: '/login',
     element: <Login />,
   },
@@ -21,7 +30,6 @@ const router = createBrowserRouter([
     path: '/register',
     element: <Register />,
   },
-  // Más rutas protegidas se pueden añadir aquí
 ]);
 
 export default router;
