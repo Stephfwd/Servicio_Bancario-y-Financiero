@@ -15,13 +15,13 @@ const userSchema = Joi.object({
   }),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
-  telefono: Joi.string().pattern(phoneRegex).allow('', null).messages({
+  telefono: Joi.string().allow('', null).pattern(phoneRegex).messages({
     'string.pattern.base': 'El teléfono solo debe contener números y guiones'
   }),
-  dui: Joi.string().pattern(duiRegex).allow('', null).messages({
+  dui: Joi.string().allow('', null).pattern(duiRegex).messages({
     'string.pattern.base': 'El DUI debe tener el formato 00000000-0'
   }),
-  rol_id: Joi.number().integer().required(),
+  rol_id: Joi.number().integer(),
   estado: Joi.string().valid('activo', 'inactivo').default('activo')
 });
 

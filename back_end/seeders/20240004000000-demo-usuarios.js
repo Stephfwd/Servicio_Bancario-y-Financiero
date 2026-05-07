@@ -1,13 +1,14 @@
 "use strict";
 
 // Contraseña de prueba: "123456" hasheada con bcrypt (10 rounds)
-const PASSWORD_HASH = "$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lHuu";
+const PASSWORD_HASH = "$2b$10$Bu9lna0WJTZPhw6Mw/anGOlyV27O1QYUC6Ve6bzylIc2c61jqwG8.";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert("usuarios", [
       {
+        id: 1,
         rol_id: 1, // admin
         nombre: "Carlos",
         apellido: "Ramírez",
@@ -20,6 +21,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 2,
         rol_id: 2, // cliente
         nombre: "María",
         apellido: "González",
@@ -32,6 +34,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 3,
         rol_id: 2, // cliente
         nombre: "José",
         apellido: "Martínez",
@@ -44,6 +47,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 4,
         rol_id: 3, // cajero
         nombre: "Ana",
         apellido: "López",

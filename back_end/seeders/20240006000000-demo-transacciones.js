@@ -5,6 +5,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert("transacciones", [
       {
+        id: 1,
         cuenta_origen_id: null,    // depósito: no tiene origen externo
         cuenta_destino_id: 1,      // → cuenta de María (ahorros)
         tipo_transaccion_id: 1,    // deposito
@@ -16,6 +17,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 2,
         cuenta_origen_id: 1,       // María (ahorros) → José (ahorros)
         cuenta_destino_id: 3,
         tipo_transaccion_id: 3,    // transferencia
@@ -27,6 +29,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 3,
         cuenta_origen_id: 3,       // José retira de su cuenta
         cuenta_destino_id: null,
         tipo_transaccion_id: 2,    // retiro

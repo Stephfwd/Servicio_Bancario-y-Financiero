@@ -5,6 +5,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert("cuentas", [
       {
+        id: 1,
         usuario_id: 2, // María
         tipo_cuenta_id: 1, // ahorros
         numero_cuenta: "SV-0001-0001-0001",
@@ -14,6 +15,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 2,
         usuario_id: 2, // María
         tipo_cuenta_id: 2, // corriente
         numero_cuenta: "SV-0001-0002-0001",
@@ -23,6 +25,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 3,
         usuario_id: 3, // José
         tipo_cuenta_id: 1, // ahorros
         numero_cuenta: "SV-0001-0001-0002",
